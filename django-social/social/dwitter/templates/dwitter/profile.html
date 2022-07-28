@@ -7,14 +7,24 @@
         
         <div class="block">
         <h1 class="title is-1">
-            {{profile.user.username|upper}}'s Dweets
+            {{ profile.user.username|upper }}'s Dweets
         </h1>
+        </div>
+        <div class="content">
+            {% for dweet in profile.user.dweets.all %}
+                <div class="box">
+                    {{ dweet.body }}
+                    <span class="is-small has-text-grey-light">
+                        ({{ dweet.created_at }})
+                    </span>
+                </div>
+            {% endfor %}
         </div>
         <form method="post">
             {% csrf_token %}
             <div class="buttons has-addons">
             {% if profile in user.profile.follows.all %}
-                <button class="button is-success">Follow</button>
+                <button class="button is-success is-static">Follow</button>
                 <button class="button is-danger" name="follow" value="unfollow">
                     Unfollow
                 </button>
