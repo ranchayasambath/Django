@@ -17,6 +17,13 @@ def create_profile(sender, instance, created, **kwargs):
 # Create a Profile for each new user.
 # Remove: post_save.connect(create_profile, sender=User)
 
+class Dweet(models.Model):
+    user = models.ForeignKey(
+        User, related_name = "dweets", on_delete=models.DO_NOTHING
+    )
+    body = models.CharField(max_length=140)
+    created_at = models.DateTimeField(auto_now_add=True)
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     follows = models.ManyToManyField(
